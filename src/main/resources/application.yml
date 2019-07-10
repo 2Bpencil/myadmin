@@ -9,7 +9,7 @@ spring:
         driverClassName: com.mysql.cj.jdbc.Driver
         driver-class-name: com.mysql.cj.jdbc.Driver
         platform: mysql
-        url: jdbc:mysql://localhost:3306/boot?serverTimezone=GMT&useUnicode=true&characterEncoding=utf-8&useSSL=false
+        url: jdbc:mysql://localhost:3306/myadmin?serverTimezone=GMT&useUnicode=true&characterEncoding=utf-8&useSSL=false
         username: root
         password: root
         initialSize: 5
