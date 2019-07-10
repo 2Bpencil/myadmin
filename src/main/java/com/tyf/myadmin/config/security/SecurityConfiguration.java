@@ -43,19 +43,28 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http.authorizeRequests()
-                .anyRequest().authenticated() //任何请求,登录后可以访问
+                /**
+                 * 登录页面可以访问静态资源
+                 */
+                .antMatchers("/login","/css/**","/image/**","/js/**").permitAll()
+                //任何请求,登录后可以访问
+                .anyRequest().authenticated()
                 .and()
                 .formLogin()
                 .loginPage("/login")
                 .permitAll()
                 .loginProcessingUrl("/login")
-                .successHandler(successHandler)//登陆成功后，执行的操作
+                //登陆成功后，执行的操作
+                .successHandler(successHandler)
                 .failureUrl("/login?error")
-                .permitAll() //登录页面用户任意访问
+                //登录页面用户任意访问
+                .permitAll()
                 .and()
                 .logout().permitAll()
                 .and()
-                .exceptionHandling().accessDeniedPage("/accessDenied"); //注销行为任意访问
+                .exceptionHandling()
+                //注销行为任意访问
+                .accessDeniedPage("/accessDenied");
         http.addFilterBefore(sysFilterSecurityInterceptor, FilterSecurityInterceptor.class);
 
     }
@@ -78,7 +87,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     @Override
         public void configure(WebSecurity web) throws Exception {
         // 设置拦截忽略文件夹，可以对静态资源放行
-        web.ignoring().antMatchers("/**");
+        web.ignoring().antMatchers("classpath:/static/**");
     }
 
     @Bean
