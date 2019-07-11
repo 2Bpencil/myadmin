@@ -7,19 +7,24 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.servlet.ModelAndView;
+
+import javax.servlet.http.HttpServletRequest;
 
 @Controller
 public class LoginController {
     private final static Logger logger = LoggerFactory.getLogger(LoginController.class);
 
+
     @RequestMapping(value ={"/index","/"},method = RequestMethod.GET)
     public String showHome(Model model) {
         String name = SecurityContextHolder.getContext().getAuthentication().getName();
-
-        logger.info("当前登陆用户：" + name);
         model.addAttribute("username",name);
         return "index";
     }
+
+
+
 
 
 
