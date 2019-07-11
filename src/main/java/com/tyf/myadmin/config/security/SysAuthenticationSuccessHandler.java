@@ -4,6 +4,8 @@ import com.tyf.myadmin.code.dao.UserRepository;
 import com.tyf.myadmin.code.entity.User;
 import com.tyf.myadmin.code.service.impl.MenuServiceImpl;
 import com.tyf.myadmin.utils.SecurityUtil;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.web.DefaultRedirectStrategy;
@@ -20,6 +22,7 @@ import java.io.IOException;
 
 @Component
 public class SysAuthenticationSuccessHandler extends SimpleUrlAuthenticationSuccessHandler {
+    private final static Logger logger = LoggerFactory.getLogger(SysAuthenticationSuccessHandler.class);
 
     private RedirectStrategy redirectStrategy = new DefaultRedirectStrategy();
 
@@ -39,6 +42,7 @@ public class SysAuthenticationSuccessHandler extends SimpleUrlAuthenticationSucc
         session.setAttribute(SecurityUtil.CURRENT_USER_SESSION, user);
         session.setAttribute(SecurityUtil.CURRENT_USER_MENU, menuService.getMenusByUserId(user.getId()));
         redirectStrategy.sendRedirect(request,response,"/index");
+        logger.info("用户-"+user.getUsername()+"-登录成功!");
     }
 
 
